@@ -218,7 +218,8 @@ def main():
 
   # 查找程序可执行文件
   program_candidates = [
-      './program_macos', './program_linux', './program.exe', './program'
+      './program-macos', './program-linux', './program-windows.exe',
+      './program.exe', './program'
   ]
   program_path = None
 

@@ -15,6 +15,11 @@
 
 ### 使用 Makefile（推荐）
 
+不同平台会生成对应的可执行文件：
+- **macOS**: `program-macos`
+- **Linux**: `program-linux`
+- **Windows**: `program-windows.exe`
+
 ```bash
 # 编译发布版本
 make
@@ -29,49 +34,64 @@ make info
 make help
 ```
 
+#### Windows 系统
+```bash
+# 使用 Windows 专用 Makefile
+mingw32-make -f Makefile.win
+
+# 或使用批处理脚本
+benchmark.bat
+```
+
 ### 手动编译
 
 #### Linux/macOS
 ```bash
-g++ -std=c++17 -O3 -march=native -mtune=native -pthread -Wall -Wextra -o program MatrixMul.cpp
+# Linux
+g++ -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread -o program-linux MatrixMul.cpp
+
+# macOS
+clang++ -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread -o program-macos MatrixMul.cpp
 ```
 
 #### Windows (MinGW)
 ```bash
-g++ -std=c++17 -O3 -march=native -mtune=native -pthread -static -Wall -Wextra -o program.exe MatrixMul.cpp
-```
-
-#### macOS (Clang)
-```bash
-clang++ -std=c++17 -O3 -march=native -mtune=native -pthread -Wall -Wextra -o program MatrixMul.cpp
+g++ -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread -static -o program-windows.exe MatrixMul.cpp
 ```
 
 ## 使用方法
 
 ### 基本用法
 ```bash
-./program
+# macOS
+./program-macos
+
+# Linux
+./program-linux
+
+# Windows
+program-windows.exe
 ```
 
 ### 带参数运行
 ```bash
-# 指定矩阵大小为 2048x2048
-./program -s 2048
+# 指定矩阵大小为 2048x2048（以 macOS 为例）
+./program-macos -s 2048
 
 # 指定线程数为 8
-./program -t 8
+./program-macos -t 8
 
 # 指定块大小为 128
-./program -b 128
+./program-macos -b 128
 
 # 运行 5 次取平均值
-./program -i 5
+./program-macos -i 5
 
 # 详细输出
-./program -v
+./program-macos -v
 
 # 组合参数
-./program -s 1024 -t 4 -b 64 -i 3 -v
+./program-macos -s 1024 -t 4 -b 64 -i 3 -v
 ```
 
 ### 命令行参数
@@ -94,18 +114,35 @@ make test
 
 # 运行完整性能测试
 make benchmark
+
+# 运行完整基准测试（包括大矩阵）
+make benchmark-full
+
+# 生成 HTML 报告
+make report
+```
+
+### 使用自动化脚本
+```bash
+# Linux/macOS
+./benchmark.sh          # 标准测试
+./benchmark.sh full     # 完整测试
+
+# Windows
+benchmark.bat           # 标准测试
+benchmark.bat full      # 完整测试
 ```
 
 ### 手动测试
 ```bash
-# 小规模快速测试
-./program -s 512 -i 3 -v
+# 小规模快速测试（以 macOS 为例）
+./program-macos -s 512 -i 3 -v
 
 # 标准测试
-./program -s 1024 -i 5
+./program-macos -s 1024 -i 5
 
 # 大规模测试
-./program -s 2048 -i 1
+./program-macos -s 2048 -i 1
 ```
 
 ## 性能调优建议
@@ -147,9 +184,9 @@ make benchmark
 ## 兼容性
 
 ### 支持的编译器
-- GCC 7.0+
-- Clang 5.0+
-- MSVC 2017+
+- GCC 11.0+（支持 C++23）
+- Clang 12.0+（支持 C++23）
+- MSVC 2022+（支持 C++23）
 
 ### 支持的操作系统
 - Linux (Ubuntu, CentOS, Arch, etc.)
@@ -157,7 +194,7 @@ make benchmark
 - Windows 10+ (MinGW/MSYS2)
 
 ### C++ 标准
-- C++17 或更高版本
+- C++23 或更高版本
 
 ## 故障排除
 
@@ -167,8 +204,9 @@ make benchmark
 g++ --version
 clang++ --version
 
-# 检查 C++17 支持
-g++ -std=c++17 --version
+# 检查 C++23 支持
+g++ -std=c++23 --version
+clang++ -std=c++23 --version
 ```
 
 ### 运行时错误

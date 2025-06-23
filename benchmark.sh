@@ -47,21 +47,24 @@ compile_program() {
     echo "使用 Makefile 编译"
     make clean
     make
-    # 简单地查找程序文件
-    if [ -f "program_macos" ]; then
-      PROGRAM="./program_macos"
-    elif [ -f "program_linux" ]; then
-      PROGRAM="./program_linux"
+    # 查找对应平台的程序文件
+    if [ "$OS" == "macOS" ] && [ -f "program-macos" ]; then
+      PROGRAM="./program-macos"
+    elif [ "$OS" == "Linux" ] && [ -f "program-linux" ]; then
+      PROGRAM="./program-linux"
+    elif [ "$OS" == "Windows" ] && [ -f "program-windows.exe" ]; then
+      PROGRAM="./program-windows.exe"
     elif [ -f "program.exe" ]; then
       PROGRAM="./program.exe"
     elif [ -f "program" ]; then
       PROGRAM="./program"
     else
-      PROGRAM=""
+      echo -e "${RED}未找到编译后的程序文件${NC}"
+      exit 1
     fi
   else
     echo "手动编译"
-    $COMPILER -std=c++17 -O3 -march=native -mtune=native -pthread -Wall -Wextra -o program$EXE_SUFFIX MatrixMul.cpp
+    $COMPILER -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread -o program$EXE_SUFFIX MatrixMul.cpp
     PROGRAM="./program$EXE_SUFFIX"
   fi
 
@@ -132,14 +135,16 @@ main() {
   print_system_info
 
   # 检查是否需要编译
-  if [ ! -f "program$EXE_SUFFIX" ] && [ ! -f "program_"* ]; then
+  if [ ! -f "program-macos" ] && [ ! -f "program-linux" ] && [ ! -f "program-windows.exe" ] && [ ! -f "program$EXE_SUFFIX" ]; then
     compile_program
   else
     # 查找已存在的程序文件
-    if [ -f "program_macos" ]; then
-      PROGRAM="./program_macos"
-    elif [ -f "program_linux" ]; then
-      PROGRAM="./program_linux"
+    if [ "$OS" == "macOS" ] && [ -f "program-macos" ]; then
+      PROGRAM="./program-macos"
+    elif [ "$OS" == "Linux" ] && [ -f "program-linux" ]; then
+      PROGRAM="./program-linux"
+    elif [ "$OS" == "Windows" ] && [ -f "program-windows.exe" ]; then
+      PROGRAM="./program-windows.exe"
     elif [ -f "program.exe" ]; then
       PROGRAM="./program.exe"
     elif [ -f "program" ]; then

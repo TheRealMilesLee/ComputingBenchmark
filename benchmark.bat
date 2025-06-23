@@ -29,46 +29,63 @@ echo CPU 核心数: %NUMBER_OF_PROCESSORS%
 echo.
 
 rem 编译程序
-if not exist program.exe (
-    echo 正在编译程序...
-    %COMPILER% -std=c++17 -O3 -march=native -mtune=native -pthread -static -Wall -Wextra -o program.exe MatrixMul.cpp
-    if %errorlevel% neq 0 (
+if exist "Makefile.win" (
+    echo 使用 Makefile 编译
+    if exist "program-windows.exe" del "program-windows.exe"
+    mingw32-make -f Makefile.win
+    if exist "program-windows.exe" (
+        set PROGRAM=program-windows.exe
+        echo 编译成功: %PROGRAM%
+    ) else (
         echo 编译失败
         pause
         exit /b 1
     )
-    echo 编译成功
-    echo.
+) else (
+    if not exist program.exe (
+        echo 正在编译程序...
+        %COMPILER% -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread -static -o program.exe MatrixMul.cpp
+        if %errorlevel% neq 0 (
+            echo 编译失败
+            pause
+            exit /b 1
+        )
+        echo 编译成功
+        set PROGRAM=program.exe
+    ) else (
+        set PROGRAM=program.exe
+    )
 )
+echo.
 
 rem 运行测试
 echo === 性能测试套件 ===
 echo.
 
 echo 1. 快速测试 (512x512)
-program.exe -s 512 -i 3
+%PROGRAM% -s 512 -i 3
 echo.
 
 echo 2. 标准测试 (1024x1024)
-program.exe -s 1024 -i 3
+%PROGRAM% -s 1024 -i 3
 echo.
 
 echo 3. 扩展性测试
 echo 单线程:
-program.exe -s 1024 -t 1 -i 2
+%PROGRAM% -s 1024 -t 1 -i 2
 echo 多线程:
-program.exe -s 1024 -i 2
+%PROGRAM% -s 1024 -i 2
 echo.
 
 if "%1"=="full" (
     echo 4. 大矩阵测试 (2048x2048)
-    program.exe -s 2048 -i 1
+    %PROGRAM% -s 2048 -i 1
     echo.
 
     echo 5. 块大小优化测试
     for %%s in (32 64 128 256) do (
         echo 块大小 %%s:
-        program.exe -s 1024 -b %%s -i 1
+        %PROGRAM% -s 1024 -b %%s -i 1
     )
     echo.
 )
