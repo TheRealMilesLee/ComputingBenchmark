@@ -1,0 +1,23 @@
+# 矩阵乘法性能测试配置文件
+# 用法: program -config config.txt
+
+# 矩阵大小 (建议使用 2 的幂次)
+matrix_size=1024
+
+# 块大小 (通常 64-128 效果较好)
+block_size=64
+
+# 线程数 (0 表示自动检测)
+num_threads=0
+
+# 迭代次数 (建议至少 3 次)
+iterations=3
+
+# 详细输出 (true/false)
+verbose=true
+
+# 预设配置示例:
+# 快速测试: matrix_size=512, iterations=1
+# 标准测试: matrix_size=1024, iterations=3
+# 性能测试: matrix_size=2048, iterations=5
+# 调试测试: matrix_size=256, verbose=true
