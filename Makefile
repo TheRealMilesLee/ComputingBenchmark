@@ -7,7 +7,9 @@ UNAME_S := $(shell uname -s)
 CXX := g++
 CXXFLAGS := -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread
 LDFLAGS :=
-SOURCE := MatrixMul.cpp
+SOURCES := MatrixMul.cpp MatrixMul_impl.cpp
+OBJECTS := $(SOURCES:.cpp=.o)
+HEADER := MatrixMul.h
 
 # 根据操作系统设置目标文件名和编译选项
 ifeq ($(UNAME_S),Linux)
@@ -66,17 +68,22 @@ NC := \033[0m # No Color
 all: $(TARGET)
 
 # 编译目标
-$(TARGET): $(SOURCE)
-	@echo "$(GREEN)正在编译 $(TARGET)...$(NC)"
+$(TARGET): $(OBJECTS)
+	@echo "$(GREEN)正在链接 $(TARGET)...$(NC)"
 	@echo "$(YELLOW)平台: $(PLATFORM)$(NC)"
 	@echo "$(YELLOW)编译器: $(CXX)$(NC)"
 	@echo "$(YELLOW)编译选项: $(CXXFLAGS)$(NC)"
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SOURCE) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
 	@echo "$(GREEN)编译完成: $(TARGET)$(NC)"
+
+# 编译对象文件
+%.o: %.cpp $(HEADER)
+	@echo "$(YELLOW)编译 $<...$(NC)"
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # 调试版本
 debug: CXXFLAGS := -g -O0 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread -DDEBUG
-debug: $(TARGET)
+debug: clean $(TARGET)
 
 # 清理
 clean:
@@ -92,7 +99,8 @@ info:
 	@echo "编译器: $(CXX)"
 	@echo "编译选项: $(CXXFLAGS)"
 	@echo "平台定义: $(PLATFORM)"
-	@echo "源文件: $(SOURCE)"
+	@echo "源文件: $(SOURCES)"
+	@echo "头文件: $(HEADER)"
 	@echo "===================="
 
 # 运行快速测试
