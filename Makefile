@@ -4,7 +4,7 @@
 UNAME_S := $(shell uname -s)
 
 # 默认编译器设置
-CXX := g++
+CXX := clang++
 CXXFLAGS := -O3 -pedantic-errors -Weverything -Wno-poison-system-directories -Wthread-safety -Wno-c++98-compat -std=c++23 -pthread
 LDFLAGS :=
 SOURCES := MatrixMul.cpp MatrixMul_impl.cpp
