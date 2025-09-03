@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>矩阵乘法性能测试报告</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        .system-info { background: #e3f2fd; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .test-result { background: #f3e5f5; padding: 15px; border-radius: 5px; margin-bottom: 15px; }
+        .metric { display: inline-block; margin: 5px 10px; padding: 5px 10px; background: #fff; border-radius: 3px; border-left: 4px solid #2196f3; }
+        .performance { color: #4caf50; font-weight: bold; }
+        .warning { color: #ff9800; }
+        .error { color: #f44336; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f2f2f2; }
+        .chart { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>矩阵乘法性能测试报告</h1>
+
+        <div class="system-info">
+            <h2>系统信息</h2>
+            <div class="metric">时间: 2025-09-03T23:14:50.410409</div>
+            <div class="metric">平台: macOS-26.0-arm64-arm-64bit</div>
+            <div class="metric">处理器: arm</div>
+            <div class="metric">CPU 核心数: 10</div>
+        </div>
+
+        <h2>测试结果</h2>
+        
+        <div class="test-result">
+            <h3>测试 1 - 512x512</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 5</div>
+            <div class="metric">内存使用: 3.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 21.7016 GFLOPS</div>
+            <div class="metric performance">多线程: 55.8124 GFLOPS</div>
+            <div class="metric">加速比: 2.5718x</div>
+            <div class="metric">效率: 25.7181%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 2 - 1024x1024</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 5</div>
+            <div class="metric">内存使用: 12.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 20.2635 GFLOPS</div>
+            <div class="metric performance">多线程: 58.6978 GFLOPS</div>
+            <div class="metric">加速比: 2.8967x</div>
+            <div class="metric">效率: 28.9673%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 3 - 1536x1536</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 3</div>
+            <div class="metric">内存使用: 27.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 23.8116 GFLOPS</div>
+            <div class="metric performance">多线程: 103.3927 GFLOPS</div>
+            <div class="metric">加速比: 4.3421x</div>
+            <div class="metric">效率: 43.4212%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 4 - 2048x2048</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 3</div>
+            <div class="metric">内存使用: 48.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 18.6099 GFLOPS</div>
+            <div class="metric performance">多线程: 82.242 GFLOPS</div>
+            <div class="metric">加速比: 4.4193x</div>
+            <div class="metric">效率: 44.1927%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 5 - 2560x2560</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 2</div>
+            <div class="metric">内存使用: 75.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 25.6578 GFLOPS</div>
+            <div class="metric performance">多线程: 120.6807 GFLOPS</div>
+            <div class="metric">加速比: 4.7035x</div>
+            <div class="metric">效率: 47.0346%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 6 - 3072x3072</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 2</div>
+            <div class="metric">内存使用: 108.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 24.2007 GFLOPS</div>
+            <div class="metric performance">多线程: 102.6911 GFLOPS</div>
+            <div class="metric">加速比: 4.2433x</div>
+            <div class="metric">效率: 42.4331%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 7 - 4096x4096</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 1</div>
+            <div class="metric">内存使用: 192.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 18.4698 GFLOPS</div>
+            <div class="metric performance">多线程: 88.745 GFLOPS</div>
+            <div class="metric">加速比: 4.8049x</div>
+            <div class="metric">效率: 48.0486%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 8 - 5120x5120</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 1</div>
+            <div class="metric">内存使用: 300.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 24.6712 GFLOPS</div>
+            <div class="metric performance">多线程: 111.8031 GFLOPS</div>
+            <div class="metric">加速比: 4.5317x</div>
+            <div class="metric">效率: 45.3173%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 9 - 6144x6144</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 1</div>
+            <div class="metric">内存使用: 432.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 23.5424 GFLOPS</div>
+            <div class="metric performance">多线程: 106.9619 GFLOPS</div>
+            <div class="metric">加速比: 4.5434x</div>
+            <div class="metric">效率: 45.4337%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 10 - 7168x7168</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 1</div>
+            <div class="metric">内存使用: 588.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 23.1761 GFLOPS</div>
+            <div class="metric performance">多线程: 112.8222 GFLOPS</div>
+            <div class="metric">加速比: 4.868x</div>
+            <div class="metric">效率: 48.6804%</div>
+        </div>
+        
+        <div class="test-result">
+            <h3>测试 11 - 8192x8192</h3>
+            <div class="metric">块大小: 96</div>
+            <div class="metric">线程数: 10</div>
+            <div class="metric">迭代次数: 1</div>
+            <div class="metric">内存使用: 768.0 MB</div>
+            <br>
+            <div class="metric performance">单线程: 18.9355 GFLOPS</div>
+            <div class="metric performance">多线程: 88.8106 GFLOPS</div>
+            <div class="metric">加速比: 4.6902x</div>
+            <div class="metric">效率: 46.9017%</div>
+        </div>
+        
+
+        <h2>性能总结</h2>
+        <table>
+            <tr><th>矩阵大小</th><th>单线程 (GFLOPS)</th><th>多线程 (GFLOPS)</th><th>加速比</th><th>效率</th></tr>
+            
+        <tr>
+            <td>512</td>
+            <td>21.7016</td>
+            <td>55.8124</td>
+            <td>2.5718</td>
+            <td>25.7181%</td>
+        </tr>
+        
+        <tr>
+            <td>1024</td>
+            <td>20.2635</td>
+            <td>58.6978</td>
+            <td>2.8967</td>
+            <td>28.9673%</td>
+        </tr>
+        
+        <tr>
+            <td>1536</td>
+            <td>23.8116</td>
+            <td>103.3927</td>
+            <td>4.3421</td>
+            <td>43.4212%</td>
+        </tr>
+        
+        <tr>
+            <td>2048</td>
+            <td>18.6099</td>
+            <td>82.242</td>
+            <td>4.4193</td>
+            <td>44.1927%</td>
+        </tr>
+        
+        <tr>
+            <td>2560</td>
+            <td>25.6578</td>
+            <td>120.6807</td>
+            <td>4.7035</td>
+            <td>47.0346%</td>
+        </tr>
+        
+        <tr>
+            <td>3072</td>
+            <td>24.2007</td>
+            <td>102.6911</td>
+            <td>4.2433</td>
+            <td>42.4331%</td>
+        </tr>
+        
+        <tr>
+            <td>4096</td>
+            <td>18.4698</td>
+            <td>88.745</td>
+            <td>4.8049</td>
+            <td>48.0486%</td>
+        </tr>
+        
+        <tr>
+            <td>5120</td>
+            <td>24.6712</td>
+            <td>111.8031</td>
+            <td>4.5317</td>
+            <td>45.3173%</td>
+        </tr>
+        
+        <tr>
+            <td>6144</td>
+            <td>23.5424</td>
+            <td>106.9619</td>
+            <td>4.5434</td>
+            <td>45.4337%</td>
+        </tr>
+        
+        <tr>
+            <td>7168</td>
+            <td>23.1761</td>
+            <td>112.8222</td>
+            <td>4.868</td>
+            <td>48.6804%</td>
+        </tr>
+        
+        <tr>
+            <td>8192</td>
+            <td>18.9355</td>
+            <td>88.8106</td>
+            <td>4.6902</td>
+            <td>46.9017%</td>
+        </tr>
+        
+        </table>
+
+        <div class="test-result">
+            <h3>性能分析</h3>
+            <p>性能测试完成。建议查看加速比和效率指标来评估多线程性能提升效果。</p>
+        </div>
+    </div>
+</body>
+</html>
